@@ -26,7 +26,9 @@ package net.edecker.tween {
 	[Event(name="Event.ENTER_FRAME", type="flash.events.Event")]
 	[Event(name="Event.COMPLETE", type="flash.events.Event")]
 	public class NanoTween extends EventDispatcher {
-
+		
+		public static const VERSION:String = "1.0";
+		
 		private static var _instances:Array;		//_instances
 		private static var _disp:Shape;				//_dispatcher
 		private static var _currTime:Number;		//currentTime
