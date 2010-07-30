@@ -1,9 +1,9 @@
 package {
-	import flash.display.StageScaleMode;
 	import net.edecker.tween.NanoTween;
 	import net.edecker.tween.ease.Bounce;
 
 	import flash.display.Sprite;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 
 	/**

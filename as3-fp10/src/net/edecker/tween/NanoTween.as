@@ -93,9 +93,10 @@ package net.edecker.tween {
 
 		/** Stops a current tween
 		 */
-		public function stop():NanoTween {
+		public function stop(dispose:Boolean = false):NanoTween {
 			if (_isRunning) _disp.removeEventListener(_UPDATE, hndlUpdate);
 			_isRunning = false;
+			if (dispose) this.dispose();
 			return this;
 		}
 		
