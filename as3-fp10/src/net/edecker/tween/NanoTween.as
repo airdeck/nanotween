@@ -2,13 +2,13 @@ package net.edecker.tween {
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
+	import flash.utils.clearTimeout;
 	import flash.utils.getTimer;
+	import flash.utils.setTimeout;
 
 	/**
 	 * @author edecker
-	 * @version 1.0
+	 * @version 1.0.1
 	 * 
 	 * NanoTween
 	 * NanoTween is not meant to be a super optimized or well organized tweening engine. 
@@ -27,7 +27,7 @@ package net.edecker.tween {
 	[Event(name="Event.COMPLETE", type="flash.events.Event")]
 	public class NanoTween extends EventDispatcher {
 		
-		public static const VERSION:String = "1.0";
+		public static const VERSION:String = "1.0.1";
 		
 		private static var _instances:Array;		//_instances
 		private static var _disp:Shape;				//_dispatcher
@@ -46,7 +46,7 @@ package net.edecker.tween {
 		private var _props:Array;					//_properties
 		private var _kill:Boolean;					//_killOnComplete
 		private var _ease:Function;					//_easeFunction
-		private var _delay:Timer;					//_delay
+		private var _delay:int = -1;				//_delay
 
 		/** Creates a new instance of a NanoTween
 		 * @param time Time in seconds for tween to complete.
@@ -81,20 +81,18 @@ package net.edecker.tween {
 		 */
 		public function start(delay:Number = 0):NanoTween {
 			if (!_isRunning) {
-				if (delay > 0) {
-					_delay = new Timer(delay*1000,1);
-					_delay.addEventListener(TimerEvent.TIMER_COMPLETE, hndlDelayComplete,false,0,true);
-					_delay.start();
-				}
+				if (delay > 0) _delay = setTimeout(doStart, delay*1000);
 				else doStart();
 			}
 			return this;
 		}
 
-		/** Stops a current tween
-		 */
+		/** Stops a current tween*/
 		public function stop(dispose:Boolean = false):NanoTween {
-			if (_isRunning) _disp.removeEventListener(_UPDATE, hndlUpdate);
+			if (_isRunning){
+				killDelay();
+				 _disp.removeEventListener(_UPDATE, hndlUpdate);
+			}
 			_isRunning = false;
 			if (dispose) this.dispose();
 			return this;
@@ -125,14 +123,9 @@ package net.edecker.tween {
 			_disp.dispatchEvent(new Event(_UPDATE));
 		}
 		
-		private function hndlDelayComplete(event:TimerEvent):void {
-			doStart();
-			killDelay();
-		}
-		
 		private function killDelay():void {
-			_delay.removeEventListener(TimerEvent.TIMER_COMPLETE, hndlDelayComplete);
-			_delay = null;
+			if (_delay >= 0) clearTimeout(_delay);
+			_delay = -1;
 		}
 
 		private function doStart():void {

@@ -44,7 +44,6 @@ package {
 			new NanoTween(rect, 1, {alpha:0}).start();
 		}
 
-		
 		private function newRect():Sprite {
 			var rect:Sprite = new Sprite();
 			rect.graphics.beginFill(0xFFFFFF*Math.random());
