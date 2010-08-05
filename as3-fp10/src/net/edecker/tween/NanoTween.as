@@ -8,7 +8,7 @@ package net.edecker.tween {
 
 	/**
 	 * @author edecker
-	 * @version 1.1
+	 * @version 1.2
 	 * 
 	 * NanoTween
 	 * NanoTween is not meant to be a super optimized or well organized tweening engine. 
@@ -26,47 +26,46 @@ package net.edecker.tween {
 	[Event(name="Event.ENTER_FRAME", type="flash.events.Event")]
 	[Event(name="Event.COMPLETE", type="flash.events.Event")]
 	public class NanoTween extends EventDispatcher {
+				
+		public  var target:Object;		//_target
 		
-		public static const VERSION:String = "1.1";
+		private static var a:Array;		//_instances
+		private static var b:Shape;		//_dispatcher
+		private static var c:Number;	//currentTime
 		
-		private static var a:Array;			//_instances
-		private static var b:Shape;			//_dispatcher
-		private static var c:Number;		//currentTime
+		private static const d:String = "U";	//UPDATE_EVENT
+		private const f:String = "p";			//PROP_NAME	
+		private const g:String = "s";			//PROP_START
+		private const h:String = "d";			//PROP_DIFF
 		
-		private static const D:String = "U"; //UPDATE_EVENT
-		private const E:String  = "p";		//PROP_NAME	
-		private const F:String  = "s";		//PROP_START
-		private const G:String  = "d";		//PROP_DIFF
-		
-		private var h:Number; 				//_targetTime
-		private var i:Number;				//_startTime
-		private var j:Number;				//_duration
-		private var k:Object;				//_target
-		private var l:Boolean;				//_isRunning
-		private var m:Array;				//_properties
-		private var n:Boolean;				//_killOnComplete
-		private var o:Function;				//_easeFunction
-		private var p:int = -1;				//_delay
+		private var i:Number; 	//_targetTime
+		private var j:Number;	//_startTime
+		private var k:Number;	//_duration
+		private var l:Boolean;	//_isRunning
+		private var m:Array;	//_properties
+		private var n:Boolean;	//_killOnComplete
+		private var o:Function;	//_easeFunction
+		private var p:int = -1;	//_delay
 
 		/** Creates a new instance of a NanoTween
-		 * @param target Target object to apply tween to.
 		 * @param time Time in seconds for tween to complete.
+		 * @param target Target object to apply tween to.
 		 * @param properties Object containing name-value pairs of properties to tween and the target (ex: {x:100, alpha:0.5})
 		 * @param ease easeing Function in the format of: ease(t,b,c,d). The default, when null, is linear.
 		 * @param autoCleanup When set to true and the tween is over dispose is called.
 		 */
 		public function NanoTween(target:Object, time:Number, properties:Object, ease:Function = null, autoCleanup:Boolean = true) {
-			j = Math.ceil(time*1000);
-			k = target;
+			this.target = target;
+			k = Math.ceil(time*1000);
 			m = [];
 			for (var name:String in properties) {
 				var obj:Object = new Object();
-				obj[E]  = name;
-				obj[F] = target[name];
-				obj[G]  = properties[name] - target[name];
+				obj[f]  = name;
+				obj[g] = target[name];
+				obj[h]  = properties[name] - target[name];
 				m.push(obj);
 			}
-			o = (ease || v);
+			o = (ease || u);
 			n = autoCleanup;
 			if (!b) {
 				b = new Shape();
@@ -88,20 +87,14 @@ package net.edecker.tween {
 		}
 
 		/** Stops a current tween*/
-		public function stop(dispose:Boolean = false):NanoTween {
+		public function stop(kill:Boolean = false):NanoTween {
 			if (l){
 				r();
-				 b.removeEventListener(D, t);
+				 b.removeEventListener(d, t);
 			}
 			l = false;
-			if (dispose) this.dispose();
+			if (kill) dispose();
 			return this;
-		}
-		
-		/** Shorcut for getting the target object of the tween.
-		 */
-		public function get target():Object {
-			return k;
 		}
 
 		/** Performs necessary actions to make sure the tween is garbage collected.
@@ -120,7 +113,7 @@ package net.edecker.tween {
 		
 		private static function q(e:Event):void {
 			c = getTimer();
-			b.dispatchEvent(new Event(D));
+			b.dispatchEvent(new Event(d));
 		}
 		
 		private function r():void {
@@ -129,30 +122,25 @@ package net.edecker.tween {
 		}
 
 		private function s():void {
-			i = getTimer();
-			h = Math.ceil(i+(j));
-			b.addEventListener(D, t,false,0,false);
+			j = getTimer();
+			i = Math.ceil(j+(k));
+			b.addEventListener(d,t);
 			l = true;
 		}
 
 		private function t(e:Event):void {
-			u();
-		}
-		
-		private function u():void {
-			var elapsed:Number = Math.min(c - i, j);
 			for each (var obj:Object in m) {
-				 k[obj[E]] = o(elapsed, obj[F], obj[G], j);
+				 target[obj[f]] = o(Math.min(c - j, k), obj[g], obj[h], k);
 			}
 			dispatchEvent(new Event("enterFrame"));
-			if (c >= h) {
+			if (c >= i) {
 				stop();
 				dispatchEvent(new Event("complete"));
 				if (n) dispose();
 			}
 		}
 		
-		private function v(t:Number, b:Number, c:Number, d:Number):Number {
+		private function u(t:Number, b:Number, c:Number, d:Number):Number {
 			return c * t / d + b;
 		}
 

@@ -8,7 +8,7 @@ package net.edecker.tween {
 
 	/**
 	 * @author edecker
-	 * @version 1.1
+	 * @version 1.2
 	 * 
 	 * NanoTween
 	 * NanoTween is not meant to be a super optimized or well organized tweening engine. 
@@ -28,8 +28,8 @@ package net.edecker.tween {
 	[Event(name="Event.ENTER_FRAME", type="flash.events.Event")]
 	[Event(name="Event.COMPLETE", type="flash.events.Event")]
 	public class NanoTweenRaw extends EventDispatcher {
-		
-		public static const VERSION:String = "1.1";
+				
+		public  var target:Object;					//_target
 		
 		private static var _instances:Array;		//_instances
 		private static var _disp:Shape;				//_dispatcher
@@ -43,7 +43,6 @@ package net.edecker.tween {
 		private var _targetTime:Number; 			//_targetTime
 		private var _startTime:Number;				//_startTime
 		private var _duration:Number;				//_duration
-		private var _target:Object;					//_target
 		private var _isRunning:Boolean;				//_isRunning
 		private var _props:Array;					//_properties
 		private var _kill:Boolean;					//_killOnComplete
@@ -58,8 +57,8 @@ package net.edecker.tween {
 		 * @param autoCleanup When set to true and the tween is over dispose is called.
 		 */
 		public function NanoTweenRaw(target:Object, time:Number, properties:Object, ease:Function = null, autoCleanup:Boolean = true) {
+			this.target = target;
 			_duration = Math.ceil(time*1000);
-			_target = target;
 			_props = [];
 			for (var name:String in properties) {
 				var obj:Object = new Object();
@@ -90,20 +89,14 @@ package net.edecker.tween {
 		}
 
 		/** Stops a current tween*/
-		public function stop(dispose:Boolean = false):NanoTweenRaw {
+		public function stop(kill:Boolean = false):NanoTweenRaw {
 			if (_isRunning){
 				killDelay();
 				 _disp.removeEventListener(_UPDATE, hndlUpdate);
 			}
 			_isRunning = false;
-			if (dispose) this.dispose();
+			if (kill) dispose();
 			return this;
-		}
-		
-		/** Shorcut for getting the target object of the tween.
-		 */
-		public function get target():Object {
-			return _target;
 		}
 
 		/** Performs necessary actions to make sure the tween is garbage collected.
@@ -133,18 +126,13 @@ package net.edecker.tween {
 		private function doStart():void {
 			_startTime = getTimer();
 			_targetTime = Math.ceil(_startTime+(_duration));
-			_disp.addEventListener(_UPDATE, hndlUpdate,false,0,false);
+			_disp.addEventListener(_UPDATE,hndlUpdate);
 			_isRunning = true;
 		}
 
 		private function hndlUpdate(e:Event):void {
-			update();
-		}
-		
-		private function update():void {
-			var elapsed:Number = Math.min(_currTime - _startTime, _duration);
 			for each (var obj:Object in _props) {
-				 _target[obj[_PROP_NAME]] = _ease(elapsed, obj[_PROP_START], obj[_PROP_DIFF], _duration);
+				 target[obj[_PROP_NAME]] = _ease(Math.min(_currTime - _startTime, _duration), obj[_PROP_START], obj[_PROP_DIFF], _duration);
 			}
 			dispatchEvent(new Event("enterFrame"));
 			if (_currTime >= _targetTime) {
