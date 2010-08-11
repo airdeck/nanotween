@@ -16,12 +16,14 @@ package {
 		
 		public function Example01() {
 			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, hndlAddedToStage);
+			else addEventListener(Event.ENTER_FRAME, hndlCheckStageReady);
 		}
 		
-		private function hndlAddedToStage(event:Event):void {
-			removeEventListener(Event.ADDED_TO_STAGE, hndlAddedToStage);
-			init();
+		private function hndlCheckStageReady(event:Event):void {
+			if (stage){
+				removeEventListener(Event.ENTER_FRAME, hndlCheckStageReady);
+				init();
+			}
 		}
 
 		private function init():void {

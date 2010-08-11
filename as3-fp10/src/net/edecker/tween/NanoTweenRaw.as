@@ -8,7 +8,6 @@ package net.edecker.tween {
 
 	/**
 	 * @author edecker
-	 * @version 1.2
 	 * 
 	 * NanoTween
 	 * NanoTween is not meant to be a super optimized or well organized tweening engine. 
@@ -35,11 +34,6 @@ package net.edecker.tween {
 		private static var _disp:Shape;				//_dispatcher
 		private static var _currTime:Number;		//currentTime
 		
-		private static const _UPDATE:String	 = "U";	//UPDATE_EVENT
-		private const _PROP_NAME:String  = "p";		//PROP_NAME	
-		private const _PROP_START:String = "s";		//PROP_START
-		private const _PROP_DIFF:String  = "d";		//PROP_DIFF
-		
 		private var _targetTime:Number; 			//_targetTime
 		private var _startTime:Number;				//_startTime
 		private var _duration:Number;				//_duration
@@ -52,23 +46,22 @@ package net.edecker.tween {
 		/** Creates a new instance of a NanoTween
 		 * @param time Time in seconds for tween to complete.
 		 * @param target Target object to apply tween to.
-		 * @param properties Object containing name-value pairs of properties to tween and the target (ex: {x:100, alpha:0.5})
+		 * @param props Object containing name-value pairs of properties to tween and the target (ex: {x:100, alpha:0.5})
 		 * @param ease easeing Function in the format of: ease(t,b,c,d). The default, when null, is linear.
-		 * @param autoCleanup When set to true and the tween is over dispose is called.
+		 * @param autoKill When set to true and the tween is over dispose is called.
 		 */
-		public function NanoTweenRaw(target:Object, time:Number, properties:Object, ease:Function = null, autoCleanup:Boolean = true) {
+		public function NanoTweenRaw(target:Object, time:Number, props:Object, ease:Function = null, autoKill:Boolean = true) {
 			this.target = target;
-			_duration = Math.ceil(time*1000);
+			_duration = time*1000;
 			_props = [];
-			for (var name:String in properties) {
+			for (var name:String in props) {
 				var obj:Object = new Object();
-				obj[_PROP_NAME]  = name;
-				obj[_PROP_START] = target[name];
-				obj[_PROP_DIFF]  = properties[name] - target[name];
+				obj.n = name;
+				obj.e = props[name];
 				_props.push(obj);
 			}
 			_ease = (ease || linear);
-			_kill = autoCleanup;
+			_kill = autoKill;
 			if (!_disp) {
 				_disp = new Shape();
 				_disp.addEventListener("enterFrame",hndlEnterFrame);
@@ -92,7 +85,7 @@ package net.edecker.tween {
 		public function stop(kill:Boolean = false):NanoTweenRaw {
 			if (_isRunning){
 				killDelay();
-				 _disp.removeEventListener(_UPDATE, hndlUpdate);
+				 _disp.removeEventListener("U", hndlUpdate);
 			}
 			_isRunning = false;
 			if (kill) dispose();
@@ -115,7 +108,7 @@ package net.edecker.tween {
 		
 		private static function hndlEnterFrame(e:Event):void {
 			_currTime = getTimer();
-			_disp.dispatchEvent(new Event(_UPDATE));
+			_disp.dispatchEvent(new Event("U"));
 		}
 		
 		private function killDelay():void {
@@ -124,15 +117,16 @@ package net.edecker.tween {
 		}
 
 		private function doStart():void {
+			for each (var obj:Object in _props) obj.s = target[obj.n];
 			_startTime = getTimer();
 			_targetTime = Math.ceil(_startTime+(_duration));
-			_disp.addEventListener(_UPDATE,hndlUpdate);
+			_disp.addEventListener("U",hndlUpdate);
 			_isRunning = true;
 		}
 
 		private function hndlUpdate(e:Event):void {
 			for each (var obj:Object in _props) {
-				 target[obj[_PROP_NAME]] = _ease(Math.min(_currTime - _startTime, _duration), obj[_PROP_START], obj[_PROP_DIFF], _duration);
+				 target[obj.n] = _ease(Math.min(_currTime - _startTime, _duration), obj.s, obj.e - obj.s, _duration);
 			}
 			dispatchEvent(new Event("enterFrame"));
 			if (_currTime >= _targetTime) {
