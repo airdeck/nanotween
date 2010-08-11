@@ -21,6 +21,7 @@ package {
 		
 		private function hndlCheckStageReady(event:Event):void {
 			if (stage){
+				stage.scaleMode = StageScaleMode.NO_SCALE;
 				removeEventListener(Event.ENTER_FRAME, hndlCheckStageReady);
 				init();
 			}

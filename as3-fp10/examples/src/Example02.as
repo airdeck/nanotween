@@ -3,6 +3,7 @@ package {
 	import net.edecker.tween.proxy.BrightnessProxy;
 
 	import flash.display.Sprite;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 
 	/**
@@ -18,6 +19,7 @@ package {
 		
 		private function hndlCheckStageReady(event:Event):void {
 			if (stage){
+				stage.scaleMode = StageScaleMode.NO_SCALE;
 				removeEventListener(Event.ENTER_FRAME, hndlCheckStageReady);
 				init();
 			}
