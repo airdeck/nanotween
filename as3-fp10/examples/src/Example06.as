@@ -41,7 +41,8 @@ package {
 		
 		private function newTween():void {
 			report();
-			for each (var tween:NanoTween in NanoTweenUtils.getTweens(_rect)) tween.stop(true);
+			//for each (var tween:NanoTween in NanoTweenUtils.getTweens(_rect)) tween.stop(true);
+			NanoTweenUtils.removeAllTweensOnObject(_rect);
 			new NanoTween(_rect, 0.5, {alpha:1}).start();
 			setTimeout(report, 250);
 			setTimeout(report, 1000);
