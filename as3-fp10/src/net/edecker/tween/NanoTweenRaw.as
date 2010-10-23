@@ -30,7 +30,7 @@ package net.edecker.tween {
 				
 		public  var target:Object;					//_target
 		
-		private static var _instances:Array;		//_instances
+		internal static var _instances:Array;		//_instances
 		private static var _disp:Shape;				//_dispatcher
 		private static var _currTime:Number;		//currentTime
 		
@@ -55,10 +55,7 @@ package net.edecker.tween {
 			_duration = time*1000;
 			_props = [];
 			for (var name:String in props) {
-				var obj:Object = new Object();
-				obj.n = name;
-				obj.e = props[name];
-				_props.push(obj);
+				_props.push({n:name,e:props[name]});
 			}
 			_ease = (ease || linear);
 			_kill = autoKill;
@@ -140,6 +137,17 @@ package net.edecker.tween {
 			return c * t / d + b;
 		}
 
+		/** Gets a list of all tweens associated with a target
+		 *  @param target The object to search for that contains one or more tweens
+		 *  @return list of NanoTween objects associated with the target
+		 */
+		public static function getTweens(target:Object):Array {
+			var results:Array = [];
+			for each (var t:NanoTweenRaw in _instances) {
+				if (t.target == target) results.push(t);
+			}
+			return results;
+		}
 		
 	}
 }

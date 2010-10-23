@@ -28,7 +28,7 @@ package net.edecker.tween {
 				
 		public  var target:Object;		//_target
 		
-		private static var a:Array;		//_instances
+		internal static var a:Array;	//_instances
 		private static var b:Shape;		//_dispatcher
 		private static var c:Number;	//currentTime
 				
@@ -52,12 +52,7 @@ package net.edecker.tween {
 			this.target = target;
 			k = time*1000;
 			m = [];
-			for (var name:String in props) {
-				var obj:Object = new Object();
-				obj.n = name;
-				obj.e = props[name];
-				m.push(obj);
-			}
+			for (var name:String in props) m.push({n:name,e:props[name]});
 			o = (ease || u);
 			n = autoKill;
 			if (!b) {
@@ -136,8 +131,6 @@ package net.edecker.tween {
 		
 		private function u(t:Number, b:Number, c:Number, d:Number):Number {
 			return c * t / d + b;
-		}
-
-		
+		}		
 	}
 }
