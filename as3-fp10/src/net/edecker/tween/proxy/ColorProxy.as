@@ -8,17 +8,28 @@ package net.edecker.tween.proxy {
 		private var s:uint;
 		private var e:uint;
 		private var p:Number = 0;
+		private var t:Object;
+		private var v:String;
 
-		public function ColorProxy(startColor:uint, endColor:uint) {
+		public function ColorProxy(startColor:uint, endColor:uint, target:Object = null, property:String = null) {
 			s = startColor;
 			e = endColor;
+			t = target;
+			v = property;
 		}
 	
 		public function set progress(n:Number):void {
 			p = n;
+			if (t) t[v] = color;
 		}
 		public function get progress():Number {
 			return p;
+		}
+		
+		public function newEndColor(endColor:uint):void {
+			s = color;
+			e = endColor;
+			p = 0;
 		}
 		
 		public function get color():uint {
@@ -36,6 +47,7 @@ package net.edecker.tween.proxy {
 			
 			return (r3 << 16 | g3 << 8 | b3);
 		}
+		
 
 	}
 }

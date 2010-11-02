@@ -1,11 +1,10 @@
 package {
-	import net.edecker.tween.proxy.DropShadowFilterProxy;
-	import flash.display.StageScaleMode;
-	import net.edecker.tween.NanoTween;
-	import net.edecker.tween.proxy.BlurFilterProxy;
-
 	import flash.display.Sprite;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import net.edecker.tween.NanoTween;
+	import net.edecker.tween.proxy.filters.BlurFilterProxy;
+	import net.edecker.tween.proxy.filters.DropShadowFilterProxy;
 
 	/**
 	 * @author ericdecker86
@@ -39,7 +38,8 @@ package {
 			s.x = 20;
 			s.y = 20;
 			addChild(s);
-			var proxy:BlurFilterProxy = new BlurFilterProxy(s,0,0,2);
+			var proxy:BlurFilterProxy = new BlurFilterProxy(0,0,2);
+			proxy.addTarget(s);
 			new NanoTween(proxy, 2, {blurX:24,blurY:24}).start(0.25);
 		}
 		
@@ -51,7 +51,8 @@ package {
 			s.x = 300;
 			s.y = 20;
 			addChild(s);
-			var proxy:DropShadowFilterProxy = new DropShadowFilterProxy(s,4,45,0,0.65,4,4,1,2);
+			var proxy:DropShadowFilterProxy = new DropShadowFilterProxy(4,45,0,0.65,4,4,1,2);
+			proxy.addTarget(s);
 			new NanoTween(proxy, 3, {distance:12,angle:55,blurX:24,blurY:24}).start(0.25);
 		}
 	}
