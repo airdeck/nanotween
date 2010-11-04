@@ -1,4 +1,5 @@
 package {
+	import net.edecker.tween.proxy.BrightnessProxy;
 	import net.edecker.tween.NanoTween;
 	import net.edecker.tween.proxy.ColorProxy;
 	import net.edecker.tween.proxy.filters.BevelFilterProxy;
@@ -9,7 +10,7 @@ package {
 	import flash.display.Sprite;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import flash.filters.DropShadowFilter;
+	import flash.filters.BlurFilter;
 
 	/**
 	 * @author ericdecker
@@ -37,6 +38,32 @@ package {
 			blurRect();
 			glowRect();
 			bevelRect();
+			complexRect();
+			brightnessRect();
+		}
+
+		private function brightnessRect():void {
+			var rect:Sprite = newRect(0xff0000);
+			rect.x = rect.width + 30;
+			rect.y = 400 - rect.height - 10;
+			addChild(rect);
+			var brightness:BrightnessProxy = new BrightnessProxy(rect);
+			new NanoTween(brightness, 1.0, {brightness:1.0}).start(0.0);
+			new NanoTween(brightness, 2.0, {brightness:-1.0}).start(1.0);
+		}
+
+		private function complexRect():void {
+			var rect:Sprite = newRect(0xEE00FF);
+			rect.x = rect.width + 30;
+			rect.y = 200 - rect.height/2;
+			rect.filters = [new BlurFilter(0,24,2)];
+			addChild(rect);
+			var blur:BlurFilterProxy = new BlurFilterProxy(0,0,2);
+			blur.target = rect;
+			new NanoTween(blur, 2.0, {blurX:12,blurY:12}).start();
+			var glow:GlowFilterProxy = new GlowFilterProxy(0xFF0000,0,0,0,1,1,true);
+			glow.target = rect;
+			new NanoTween(glow, 2.0, {alpha:1,blurX:16,blurY:16}).start();
 		}
 
 		private function bevelRect():void {
@@ -45,8 +72,8 @@ package {
 			rect.y = 10;
 			addChild(rect);
 			var bevel:BevelFilterProxy = new BevelFilterProxy(4,45,0xFFFFFF,0.5,0x000000,0.5,2,2,1,2);
-			bevel.addTarget(rect);
-			new NanoTween(bevel, 2.0, {distance:6,angle:135, blurX:4,blurY:4}).start();
+			bevel.target = rect;
+			new NanoTween(bevel, 3.0, {distance:6,angle:135, blurX:4,blurY:4}).start(1.0);
 		}
 
 		private function glowRect():void {
@@ -55,7 +82,7 @@ package {
 			rect.y = 400 - rect.height - 10;
 			addChild(rect);
 			var glow:GlowFilterProxy = new GlowFilterProxy(0x00FFFF, 1, 0, 0,1,2);
-			glow.addTarget(rect);
+			glow.target = rect;
 			new NanoTween(glow, 2.0, {blurX:16,blurY:16}).start();
 			var c:ColorProxy = new ColorProxy(0x00FFFF, 0x6600FF,glow,"color");
 			new NanoTween(c, 2.0, {progress:1}).start(1.0);
@@ -65,10 +92,9 @@ package {
 			var rect:Sprite = newRect(0xEE00FF);
 			rect.x = 10;
 			rect.y = 200 - rect.height/2;
-			rect.filters = [new DropShadowFilter(10,45,0,1,2,2,1)];
 			addChild(rect);
 			var blur:BlurFilterProxy = new BlurFilterProxy(0,0,2);
-			blur.addTarget(rect);
+			blur.target = rect;
 			new NanoTween(blur, 2.0, {blurX:12,blurY:12}).start();
 		}
 		
@@ -78,7 +104,7 @@ package {
 			rect.y = 10;
 			addChild(rect);
 			var shadow:DropShadowFilterProxy = new DropShadowFilterProxy(4,45,0,0.5,5,5);
-			shadow.addTarget(rect);
+			shadow.target = rect;
 			new NanoTween(shadow, 2.0, {blurX:16,blurY:16,distance:10,angle:135,alpha:0.3}).start();
 		}
 

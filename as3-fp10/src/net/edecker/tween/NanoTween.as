@@ -20,10 +20,12 @@ package net.edecker.tween {
 	 * upon the equation and grouped by in, out, inOut, and outIn. The idea is to only import which ease functions are needed.
 	 * Upon starting a new tween, an optional delay can be passed as an offset. Each time the tween loop updates, the tween will
 	 * dispatch a nantive Event.ENTER_FRAME event. Likewise, upon the tween's completion, it will dispatch Event.COMPLETE.
+	 * 
+	 * NanoTween is under the MIT License (http://www.opensource.org/licenses/mit-license.php)
 	 */
 
-	[Event(name="Event.ENTER_FRAME", type="flash.events.Event")]
-	[Event(name="Event.COMPLETE", type="flash.events.Event")]
+	[Event(name="enterFrame", type="flash.events.Event")]
+	[Event(name="complete", type="flash.events.Event")]
 	public class NanoTween extends EventDispatcher {
 				
 		public  var target:Object;		//_target

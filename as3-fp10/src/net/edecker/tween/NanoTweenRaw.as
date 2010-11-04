@@ -24,8 +24,8 @@ package net.edecker.tween {
 	 * NOTE: This is a "raw" working file. Using the compressed NanoTween class can save you a few bytes.
 	 */
 
-	[Event(name="Event.ENTER_FRAME", type="flash.events.Event")]
-	[Event(name="Event.COMPLETE", type="flash.events.Event")]
+	[Event(name="enterFrame", type="flash.events.Event")]
+	[Event(name="complete", type="flash.events.Event")]
 	public class NanoTweenRaw extends EventDispatcher {
 				
 		public  var target:Object;					//_target
