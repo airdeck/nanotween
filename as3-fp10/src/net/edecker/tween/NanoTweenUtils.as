@@ -20,9 +20,11 @@ package net.edecker.tween {
 		 *  @param target The object to search for that contains one or more tweens
 		 */
 		public static function removeAllTweensOnObject(target:Object):void {
+			var matches:Array = [];
 			for each (var t:NanoTween in NanoTween.a) {
-				if (t.target == target) t.stop(true);
+				if (t.target == target) matches.push(t);
 			}
+			for each (var match:NanoTween in matches) match.stop(true);
 		}
 	}
 }

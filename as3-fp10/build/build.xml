@@ -1,0 +1,54 @@
+<project name="NanoTween build SWC" basedir="../" default="build">
+	
+	<!-- load user configuration properties -->
+	<property file="build/build.properties" />
+	<property name="src" value="src" />
+	<property name="file" value="net/edecker/tween/NanoTweenVersion.as" />
+	
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+		
+	<target name="build"> 
+		<antcall target="injectDate"/>
+		<antcall target="increaseBuildNumber"/>
+		<antcall target="compileSWC"/>
+	</target>
+	
+	<target name="compileSWC">
+		<!-- compile classes to swc -->
+		<compc output="${basedir}/NanoTween.swc" locale="en_US">
+			<source-path path-element="${src-dir}" />
+			<include-sources dir="src\net\edecker\tween" includes="*\*,NanoTween.as,NanoTweenUtils.as,NanoTweenVersion.as"/>
+			<strict>true</strict>
+			<optimize>true</optimize>
+			<warnings>true</warnings>
+		</compc>
+	</target>
+	
+	<target name="injectDate">
+		<tstamp>
+			<format property="build.date" pattern="MM/dd/yyyy hh:mm aa" unit="hour"/>
+			<format property="build.year" pattern="yyyy" unit="hour"/>
+		</tstamp>
+		<!-- replace date -->
+		<replaceregexp match="DATE:String = '[^']+'" replace="DATE:String = '${build.date}'" byline="true">
+			<fileset dir="${src}" includes="${file}"/>
+		</replaceregexp>
+		<echo>${build.date}</echo>
+	</target>
+	
+	<target name="increaseBuildNumber">
+		<buildnumber file="build/build.number"/>
+		<!-- replace build number -->
+		<replaceregexp match="\.[0-9-]+';" replace="\.${build.number}';" byline="true">
+		    <fileset dir="${src}" includes="${file}"/>
+		</replaceregexp>
+	</target>
+	
+	
+	<target name="resetBuildNumber">
+		<replaceregexp match="build.number=[0-9]+" replace="build.number=-1" byline="true">
+		    <fileset dir="build" includes="build.number"/>
+		</replaceregexp>
+	</target>
+	
+</project>
