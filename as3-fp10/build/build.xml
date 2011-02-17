@@ -17,7 +17,7 @@
 		<!-- compile classes to swc -->
 		<compc output="${basedir}/NanoTween.swc" locale="en_US">
 			<source-path path-element="${src-dir}" />
-			<include-sources dir="src\net\edecker\tween" includes="*\*,NanoTween.as,NanoTweenUtils.as,NanoTweenVersion.as"/>
+			<include-sources dir="src\net\edecker\tween" includes="ease\*,proxy\*,NanoTween.as,NanoTweenAdvance.as,NanoTweenUtils.as,NanoTweenVersion.as"/>
 			<strict>true</strict>
 			<optimize>true</optimize>
 			<warnings>true</warnings>

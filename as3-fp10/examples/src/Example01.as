@@ -1,5 +1,5 @@
 package {
-	import net.edecker.tween.NanoTween;
+	import net.edecker.tween.NanoTweenAdvance;
 	import net.edecker.tween.ease.Bounce;
 
 	import flash.display.Sprite;
@@ -34,17 +34,13 @@ package {
 				rect.x = Math.floor( (550-rect.width)*Math.random() );
 				rect.y = -rect.height;
 				addChild(rect);
-				var tween:NanoTween = new NanoTween(rect, 1.5, {y:400-rect.height}, Bounce.easeOut);
-				tween.addEventListener(Event.COMPLETE, hndlTweenComplete);
+				var tween:NanoTweenAdvance = new NanoTweenAdvance(rect, 1.5, {y:400-rect.height}, Bounce.easeOut, {onComplete:tweenComplete, onCompleteArgs:[rect]});
 				tween.start(Math.random()*5);
 			}
 		}
 		
-		private function hndlTweenComplete(event:Event):void {
-			var tween:NanoTween = event.currentTarget as NanoTween;
-			var rect:Sprite = tween.target as Sprite;
-			
-			new NanoTween(rect, 1, {alpha:0}).start();
+		private function tweenComplete(rect:Sprite):void {
+			new NanoTweenAdvance(rect, 1, {alpha:0}).start();
 		}
 
 		private function newRect():Sprite {

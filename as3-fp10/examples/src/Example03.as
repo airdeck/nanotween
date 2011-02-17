@@ -1,4 +1,5 @@
 package {
+	import net.edecker.tween.NanoTweenAdvance;
 	import net.edecker.tween.NanoTween;
 	import net.edecker.tween.proxy.ColorProxy;
 
@@ -29,18 +30,36 @@ package {
 		}
 
 		private function init():void {
-			_proxy = new ColorProxy(0x0000FF,0xFF0000);
-			var tween:NanoTween = new NanoTween(_proxy, 1, {progress:1});
-			tween.addEventListener(Event.ENTER_FRAME, hndlUpdate);
-			tween.start();
-			hndlUpdate(null);
+			methodA();
 		}
 		
-		private function hndlUpdate(event:Event):void {
+		private function draw():void {
 			this.graphics.clear();
 			this.graphics.beginFill(_proxy.color);
 			this.graphics.drawRect(10, 10, 530, 380);
 			this.graphics.endFill();
+		}
+		
+		private function methodA():void {
+			_proxy = new ColorProxy(0x00FF00,0x0000FF);
+			var tween:NanoTween = new NanoTween(_proxy, 1, {progress:1});
+			tween.addEventListener(Event.ENTER_FRAME, hndlUpdate);
+			tween.addEventListener(Event.COMPLETE, hndlComplete);
+			tween.start();
+			hndlUpdate(null);
+		}
+
+		private function hndlUpdate(event:Event):void {
+			draw();
+		}
+		
+		private function hndlComplete(event:Event):void {
+			methodB();
+		}
+		
+		private function methodB():void {
+			_proxy = new ColorProxy(0x0000FF,0xFF0000);
+			new NanoTweenAdvance(_proxy, 1, {progress:1}, null, {onUpdate:draw}).start();
 		}
 	}
 }

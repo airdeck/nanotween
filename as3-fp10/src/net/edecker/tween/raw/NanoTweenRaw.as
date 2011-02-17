@@ -1,4 +1,4 @@
-package net.edecker.tween {
+package net.edecker.tween.raw {
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
