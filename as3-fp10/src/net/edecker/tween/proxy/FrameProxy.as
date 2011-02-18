@@ -2,21 +2,33 @@ package net.edecker.tween.proxy {
 
 	import flash.display.MovieClip;
 	/**
-	 * @author ericdecker86
+	 * Allows for a MovieClip's timeline to be tweened.
+	 * @author edecker
 	 */
 	public class FrameProxy {
 
-		private var t:MovieClip;
+		/** The MovieClip to control. */
+		public var target:MovieClip;
 		
+		/** Create a new FrameProxy object.
+		 * @param target The MovieClip to control.
+		 */
 		public function FrameProxy(target:MovieClip) {
-			t = target;
+			this.target = target;
 		}
 		
-		public function set frame(value:Number):void {
-			t.gotoAndStop(Math.floor(value));
-		}
+		/**
+		 * Current frame of the targeted MovieClip
+		 */
 		public function get frame():Number {
-			return t.currentFrame;
+			return target.currentFrame;
 		}
+		/**
+		 * @private
+		 */
+		public function set frame(value:Number):void {
+			target.gotoAndStop(Math.floor(value));
+		}
+		
 	}
 }

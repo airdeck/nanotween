@@ -1,5 +1,8 @@
 package net.edecker.tween {
 	/**
+	 * Various utilities to be used with NanoTween.
+	 * <p>The utilites are kept in a seperate class to keep filesize down. Thus, the NanoTweenUtils
+	 * class is only compiled as it is needed.</p>
 	 * @author edecker
 	 */
 	public class NanoTweenUtils {

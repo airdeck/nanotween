@@ -1,4 +1,4 @@
-<project name="NanoTween build SWC" basedir="../" default="build">
+<project name="NanoTween" basedir="../" default="build">
 	
 	<!-- load user configuration properties -->
 	<property file="build/build.properties" />
@@ -49,6 +49,22 @@
 		<replaceregexp match="build.number=[0-9]+" replace="build.number=-1" byline="true">
 		    <fileset dir="build" includes="build.number"/>
 		</replaceregexp>
+	</target>
+	
+
+	<target name="asdoc">
+		<!-- delete all files in the doc dir -->
+		<delete includeemptydirs="true">
+			<fileset dir="${doc-dir}" includes="**/*" />
+		</delete>
+		<!-- create docs -->
+		<property name="tween" value="${src-dir}/net/edecker/tween" />
+		<exec executable="${asdoc}"> 
+		    <arg line="	-doc-sources '${tween}' 
+		    		-output '${doc-dir}' 
+		    		-main-title 'NanoTween' 
+		    		-window-title 'NanoTween'" /> 
+		</exec>
 	</target>
 	
 </project>

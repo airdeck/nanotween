@@ -8,24 +8,9 @@ package net.edecker.tween.raw {
 
 	/**
 	 * @author edecker
-	 * 
-	 * NanoTween
-	 * NanoTween is not meant to be a super optimized or well organized tweening engine. 
-	 * Rather, it is ment to condense basic tweening functionalities into one small class 
-	 * that can be used with preloaders, banner ads, and other Flash projects were size is the primary concern.
-	 * 
-	 * Each tween is a seperate instance rather than hooking up into a centralized synchronized manager.
-	 * When creating a new NanoTween you can supply a time, a target object, a list of properties and values,
-	 * as well as an optionl external easeing function. The easeing functions are seperated into classes based
-	 * upon the equation and grouped by in, out, inOut, and outIn. The idea is to only import which ease functions are needed.
-	 * Upon starting a new tween, an optional delay can be passed as an offset. Each time the tween loop updates, the tween will
-	 * dispatch a nantive Event.ENTER_FRAME event. Likewise, upon the tween's completion, it will dispatch Event.COMPLETE.
-	 * 
-	 * NOTE: This is a "raw" working file. Using the compressed NanoTween class can save you a few bytes.
+	 * @private
 	 */
 
-	[Event(name="enterFrame", type="flash.events.Event")]
-	[Event(name="complete", type="flash.events.Event")]
 	public class NanoTweenRaw extends EventDispatcher {
 				
 		public  var target:Object;					//_target
@@ -78,7 +63,9 @@ package net.edecker.tween.raw {
 			return this;
 		}
 
-		/** Stops a current tween*/
+		/** Stops a current tween
+		 * @param kill When set to true the tween will dispose itself
+		 */
 		public function stop(kill:Boolean = false):NanoTweenRaw {
 			if (_isRunning){
 				killDelay();
@@ -90,7 +77,7 @@ package net.edecker.tween.raw {
 		}
 
 		/** Performs necessary actions to make sure the tween is garbage collected.
-		 * This is called automatically at the end of a tween whrn autoCleanup is set to true. 
+		 * This is called automatically at the end of a tween whrn autoKill is set to true. 
 		 */
 		public function dispose():void {
 			var index:uint = _instances.indexOf(this);
@@ -123,7 +110,7 @@ package net.edecker.tween.raw {
 
 		private function hndlUpdate(e:Event):void {
 			for each (var obj:Object in _props) {
-				 target[obj.n] = _ease(Math.min(_currTime - _startTime, _duration), obj.s, obj.e - obj.s, _duration);
+				 target[obj.n] = _duration == 0 ? obj.e : _ease(Math.min(_currTime - _startTime, _duration), obj.s, obj.e - obj.s, _duration);
 			}
 			dispatchEvent(new Event("enterFrame"));
 			if (_currTime >= _targetTime) {

@@ -1,4 +1,5 @@
 package {
+	import net.edecker.tween.NanoTween;
 	import net.edecker.tween.NanoTweenAdvance;
 	import net.edecker.tween.ease.Bounce;
 
@@ -34,13 +35,12 @@ package {
 				rect.x = Math.floor( (550-rect.width)*Math.random() );
 				rect.y = -rect.height;
 				addChild(rect);
-				var tween:NanoTweenAdvance = new NanoTweenAdvance(rect, 1.5, {y:400-rect.height}, Bounce.easeOut, {onComplete:tweenComplete, onCompleteArgs:[rect]});
-				tween.start(Math.random()*5);
+				new NanoTweenAdvance(rect, 1.5, {y:400-rect.height}, Bounce.easeOut, {onComplete:tweenComplete, onCompleteArgs:[rect]}).start(Math.random()*5);
 			}
 		}
 		
 		private function tweenComplete(rect:Sprite):void {
-			new NanoTweenAdvance(rect, 1, {alpha:0}).start();
+			new NanoTween(rect, 0.5, {alpha:0}).start();
 		}
 
 		private function newRect():Sprite {

@@ -5,31 +5,47 @@ package net.edecker.tween {
 	import flash.utils.clearTimeout;
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
-
+	
+	[Event(name="enterFrame", type="flash.events.Event")]
+	[Event(name="complete", type="flash.events.Event")]
 	/**
-	 * @author edecker
-	 * 
-	 * NanoTween
-	 * NanoTween is not meant to be a super optimized or well organized tweening engine. 
+	 * A self-contained tween.
+	 * <p>NanoTween is not meant to be a super optimized or well organized tweening engine. 
 	 * Rather, it is ment to condense basic tweening functionalities into one small class 
-	 * that can be used with preloaders, banner ads, and other Flash projects were size is the primary concern.
+	 * that can be used with preloaders, banner ads, and other Flash projects were size is the primary concern.</p>
 	 * 
-	 * Each tween is a seperate instance rather than hooking up into a centralized synchronized manager.
+	 * <p>Each tween is a seperate instance rather than hooking up into a centralized synchronized manager.
 	 * When creating a new NanoTween you can supply a time, a target object, a list of properties and values,
 	 * as well as an optionl external easeing function. The easeing functions are seperated into classes based
 	 * upon the equation and grouped by in, out, inOut, and outIn. The idea is to only import which ease functions are needed.
 	 * Upon starting a new tween, an optional delay can be passed as an offset. Each time the tween loop updates, the tween will
-	 * dispatch a nantive Event.ENTER_FRAME event. Likewise, upon the tween's completion, it will dispatch Event.COMPLETE.
+	 * dispatch a nantive Event.ENTER_FRAME event. Likewise, upon the tween's completion, it will dispatch Event.COMPLETE.</p>
 	 * 
-	 * NanoTween is under the MIT License (http://www.opensource.org/licenses/mit-license.php)
+	 * <p>NanoTween is under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.</p>
+	 * 
+	 * @example The following code creates a new tween on mySprite that will fade the alpha to 0 over 1 second:
+	 * <listing version="3.0">
+	 * new NanoTween(mySprite, 1.0, {alpha:0}).start();</listing>
+	 * 
+	 * @example The following code creates a new tween on mySprite that will fade the alpha to 0 over 0.5 seconds
+	 * after a 1 second delay and will use a Quad easeIn algorithm:
+	 * <listing version="3.0">
+	 * new NanoTween(mySprite, 0.5, {alpha:0}, Quad.easeIn).start(1.0);</listing>
+	 * 
+	 * @example The following code creates a new tween on mySprite that will fade the alpha to 0 over 1 second
+	 * and upon completion of the tween will call the event listener hndlTweenOver:
+	 * <listing version="3.0">
+	 * new NanoTween(mySprite, 1.0, {alpha:0}).start().addEventListener(Event.COMPLETE, hndlTweenOver);</listing>
+	 * 
+	 * @see net.edecker.tween.NanoTweenAdvance
+	 * @author edecker
 	 */
-
-	[Event(name="enterFrame", type="flash.events.Event")]
-	[Event(name="complete", type="flash.events.Event")]
 	public class NanoTween extends EventDispatcher {
-				
+		
+		/**The scope of the tween*/		
 		public  var target:Object;		//_target
 		
+		/**@private*/
 		internal static var a:Array;	//_instances
 		private static var b:Shape;		//_dispatcher
 		private static var c:Number;	//currentTime
@@ -67,6 +83,7 @@ package net.edecker.tween {
 
 		/** Starts the tween with optional delay
 		 * @param delay Time to delay tween in seconds.
+		 * @return Returns the current instance of the tween.
 		 */
 		public function start(delay:Number = 0):NanoTween {
 			if (!l) {
@@ -76,7 +93,10 @@ package net.edecker.tween {
 			return this;
 		}
 
-		/** Stops a current tween*/
+		/** Stops a current tween
+		 * @param kill When set to true the tween will dispose itself.
+		 * @return Returns the current instance of the tween.
+		 */
 		public function stop(kill:Boolean = false):NanoTween {
 			if (l){
 				r();
@@ -88,7 +108,7 @@ package net.edecker.tween {
 		}
 
 		/** Performs necessary actions to make sure the tween is garbage collected.
-		 * This is called automatically at the end of a tween whrn autoCleanup is set to true. 
+		 * This is called automatically at the end of a tween when autoKill is set to true.
 		 */
 		public function dispose():void {
 			var index:uint = a.indexOf(this);
@@ -121,7 +141,7 @@ package net.edecker.tween {
 
 		private function t(e:Event):void {
 			for each (var obj:Object in m) {
-				 target[obj.n] = o(Math.min(c - j, k), obj.s, obj.e-obj.s, k);
+				 target[obj.n] = k == 0 ? obj.e : o(Math.min(c - j, k), obj.s, obj.e-obj.s, k);
 			}
 			dispatchEvent(new Event("enterFrame"));
 			if (c >= i) {
