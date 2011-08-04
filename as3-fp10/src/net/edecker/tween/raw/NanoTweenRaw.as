@@ -19,11 +19,11 @@ package net.edecker.tween.raw {
 		private static var _disp:Shape;				//_dispatcher
 		private static var _currTime:Number;		//currentTime
 		
+		internal var _props:Array;					//_properties
 		private var _targetTime:Number; 			//_targetTime
 		private var _startTime:Number;				//_startTime
 		private var _duration:Number;				//_duration
 		private var _isRunning:Boolean;				//_isRunning
-		private var _props:Array;					//_properties
 		private var _kill:Boolean;					//_killOnComplete
 		private var _ease:Function;					//_easeFunction
 		private var _delay:int = -1;				//_delay

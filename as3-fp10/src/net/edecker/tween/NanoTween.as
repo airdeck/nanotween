@@ -50,11 +50,11 @@ package net.edecker.tween {
 		private static var b:Shape;		//_dispatcher
 		private static var c:Number;	//currentTime
 				
+		internal var m:Array;	//_properties
 		private var i:Number; 	//_targetTime
 		private var j:Number;	//_startTime
 		private var k:Number;	//_duration
 		private var l:Boolean;	//_isRunning
-		private var m:Array;	//_properties
 		private var n:Boolean;	//_killOnComplete
 		private var o:Function;	//_easeFunction
 		private var p:int = -1;	//_delay
@@ -64,7 +64,7 @@ package net.edecker.tween {
 		 * @param target Target object to apply tween to.
 		 * @param props Object containing name-value pairs of properties to tween and the target (ex: {x:100, alpha:0.5})
 		 * @param ease easeing Function in the format of: ease(t,b,c,d). The default, when null, is linear.
-		 * @param autoKill When set to true and the tween is over dispose is called.
+		 * @param autoKill When set to true and the tween is over dispose is automatically called.
 		 */
 		public function NanoTween(target:Object, time:Number, props:Object, ease:Function = null, autoKill:Boolean = true) {
 			this.target = target;

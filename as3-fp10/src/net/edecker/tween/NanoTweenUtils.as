@@ -19,10 +19,28 @@ package net.edecker.tween {
 			return results;
 		}
 		
+		/** Removes selected tweens associated attributes on a target object
+		 *  @param target The object to search for that contains one or more tweens
+		 *  @param attributes Array of attribute names as strings
+		 */
+		public static function removeTweens(target:Object, attributes:Array):void {
+			var matches:Array = [];
+			for each (var t:NanoTween in NanoTween.a) {
+				if (t.target == target) matches.push(t);
+			}
+			for each (var match:NanoTween in matches) {
+				for (var i:uint = 0; i < match.m.length; i++) {
+					if (attributes.indexOf(match.m[i].n) != -1) {
+						match.m.splice(i--,1);
+					}
+				}
+			}
+		}		
+
 		/** Stops and removes all tweens associated with a target object
 		 *  @param target The object to search for that contains one or more tweens
 		 */
-		public static function removeAllTweensOnObject(target:Object):void {
+		public static function removeAllTweens(target:Object):void {
 			var matches:Array = [];
 			for each (var t:NanoTween in NanoTween.a) {
 				if (t.target == target) matches.push(t);

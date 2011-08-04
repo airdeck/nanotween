@@ -35,7 +35,7 @@ package {
 				rect.x = Math.floor( (550-rect.width)*Math.random() );
 				rect.y = -rect.height;
 				addChild(rect);
-				new NanoTweenAdvance(rect, 1.5, {y:400-rect.height}, Bounce.easeOut, {onComplete:tweenComplete, onCompleteArgs:[rect]}).start(Math.random()*5);
+				new NanoTweenAdvance(rect, 1.5, {y:400-rect.height}, {onComplete:tweenComplete, onCompleteArgs:[rect], ease:Bounce.easeOut}).start(Math.random()*5);
 			}
 		}
 		

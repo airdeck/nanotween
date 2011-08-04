@@ -59,7 +59,7 @@ package {
 		
 		private function methodB():void {
 			_proxy = new ColorProxy(0x0000FF,0xFF0000);
-			new NanoTweenAdvance(_proxy, 1, {progress:1}, null, {onUpdate:draw}).start();
+			new NanoTweenAdvance(_proxy, 1, {progress:1}, {onUpdate:draw}).start();
 		}
 	}
 }

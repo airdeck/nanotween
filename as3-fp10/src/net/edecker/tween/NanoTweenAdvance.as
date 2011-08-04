@@ -36,11 +36,12 @@ package net.edecker.tween {
 		 * 		  <li>onCompleteArgs:Array		Optional list of arguments for the onComplete function</li>
 		 * 		  <li>onUpdate:Function			Callback function call upon evey update</li>
 		 * 		  <li>onUpdateArgs:Array		Optional list of arguments for the onUpdate function</li>
+		 * 		  <li>ease:Function				Easeing Function in the format of: ease(t,b,c,d). When null (default) the ease is linear.</li>
+		 * 		  <li>autoKill:Boolean			When set to true and the tween is over dispose is automatically called.</li>
 		 * 		  </ul>
-		 * @param autoKill When set to true and the tween is over dispose is called.
 		 */
-		public function NanoTweenAdvance(target:Object, time:Number, props:Object, ease:Function = null, tweenParams:Object = null, autoKill:Boolean = true) {
-			super(target, time, props, ease, autoKill);
+		public function NanoTweenAdvance(target:Object, time:Number, props:Object, tweenParams:Object = null) {
+			super(target, time, props, tweenParams.ease, tweenParams.hasOwnProperty('autoKill') ? tweenParams.autoKill : true);
 			if (tweenParams) {
 				a = e(tweenParams,"onComplete");
 				b = e(tweenParams,"onCompleteArgs");

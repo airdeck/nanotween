@@ -79,6 +79,10 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="NanoTween.html#m">m</a> : Array<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol"><a href="NanoTween.html">NanoTween</a></td>
+</tr>
+<tr class="hideInheritedProperty">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="NanoTween.html#target">target</a> : Object<div class="summaryTableDescription">The scope of the tween</div>
 </td><td class="summaryTableOwnerCol"><a href="NanoTween.html">NanoTween</a></td>
 </tr>
@@ -102,7 +106,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#NanoTweenAdvance()">NanoTweenAdvance</a>(target:Object, time:Number, props:Object, ease:Function = null, tweenParams:Object = null, autoKill:Boolean = true)</div>
+<a class="signatureLink" href="#NanoTweenAdvance()">NanoTweenAdvance</a>(target:Object, time:Number, props:Object, tweenParams:Object = null)</div>
 <div class="summaryTableDescription"> Creates a new NanoTween with some additional features
    </div>
 </td><td class="summaryTableOwnerCol">NanoTweenAdvance</td>
@@ -179,7 +183,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function NanoTweenAdvance(target:Object, time:Number, props:Object, ease:Function = null, tweenParams:Object = null, autoKill:Boolean = true)</code><p> Creates a new NanoTween with some additional features
+<code>public function NanoTweenAdvance(target:Object, time:Number, props:Object, tweenParams:Object = null)</code><p> Creates a new NanoTween with some additional features
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -204,27 +208,7 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">ease</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; easeing Function in the format of: ease(t,b,c,d). The default, when null, is linear.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">tweenParams</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; Object containing special parameters to be used by the tween:
-       <ul>
-       <li>onComplete:Function  Callback function call upon completion of the tween</li>
-       <li>onCompleteArgs:Array  Optional list of arguments for the onComplete function</li>
-       <li>onUpdate:Function   Callback function call upon evey update</li>
-       <li>onUpdateArgs:Array  Optional list of arguments for the onUpdate function</li>
-       </ul>
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">autoKill</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; When set to true and the tween is over dispose is called.
+<td width="20px"></td><td><code><span class="label">tweenParams</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; easeing Function in the format of: ease(t,b,c,d). The default, when null, is linear.
    </td>
 </tr>
 </table>

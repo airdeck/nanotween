@@ -1,11 +1,11 @@
 package {
-	import net.edecker.tween.NanoTweenUtils;
-	import net.edecker.tween.NanoTween;
-
 	import flash.display.Sprite;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.utils.setTimeout;
+	import net.edecker.tween.NanoTween;
+	import net.edecker.tween.NanoTweenUtils;
+
 
 	/**
 	 * @author ericdecker
@@ -42,7 +42,7 @@ package {
 		private function newTween():void {
 			report();
 			//for each (var tween:NanoTween in NanoTweenUtils.getTweens(_rect)) tween.stop(true);
-			NanoTweenUtils.removeAllTweensOnObject(_rect);
+			NanoTweenUtils.removeAllTweens(_rect);
 			new NanoTween(_rect, 0.5, {alpha:1}).start();
 			setTimeout(report, 250);
 			setTimeout(report, 1000);

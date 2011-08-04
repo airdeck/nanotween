@@ -8,7 +8,7 @@ package net.edecker.tween.proxy.filters {
 	public class AbstractFilterProxy {
 		
 		/** The targeted DisplayObject that the filter will be applied to */
-		public  var target:DisplayObject;	//target display object
+		private var t:DisplayObject;	//target display object
 		private var f:BitmapFilter;			//filter
 		private var i:int = -1;				//index of filter in target filter array
 	
@@ -25,16 +25,24 @@ package net.edecker.tween.proxy.filters {
 		 * For any updates after the filter is spliced out and replaced based in its index value
 		 */
 		protected function u():void {
-			if (target) {
+			if (t) {
 				if (i < 0) {
-					target.filters = target.filters.concat(f);
-					i = target.filters.length-1;
+					t.filters = t.filters.concat(f);
+					i = t.filters.length-1;
 				}else{
-					var duplicate:Array = target.filters;
+					var duplicate:Array = t.filters;
 					duplicate.splice(i, 1, f);
-					target.filters = duplicate;
+					t.filters = duplicate;
 				}
 			}
+		}
+		
+		public function set target(object:DisplayObject):void {
+			t = object;
+			u();
+		}
+		public function get target():DisplayObject {
+			return t;
 		}
 	}
 }

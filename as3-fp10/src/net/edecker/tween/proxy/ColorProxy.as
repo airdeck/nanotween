@@ -1,4 +1,5 @@
 package net.edecker.tween.proxy {
+	import flash.geom.ColorTransform;
 
 	/**
 	 * Allows for a color value to be interpolated and tweened.
@@ -101,6 +102,14 @@ package net.edecker.tween.proxy {
 			return (r3 << 16 | g3 << 8 | b3);
 		}
 		
-
+		/** Get the current color as a ColorTransform object 
+		 * @return resulting ColorTransform object 
+		 **/
+		public function get colorTransform():ColorTransform {
+			var ct:ColorTransform = new ColorTransform();
+			ct.color = color;
+			return ct;
+		}
+		
 	}
 }
