@@ -7,14 +7,19 @@ package net.edecker.tween {
 	 * @example The following code creates a new tween on mySprite that will fade the alpha to 0 over 1 second,
 	 * and upon completion will call the function 'myFunction' and pass 'true' and '10' as the arguments:
 	 * <listing version="3.0">
-	 * new NanoTween(mySprite, 1.0, {alpha:0}, null, {onComplete:myFunction,onCompleteArgs:[true,10]}).start();
+	 * new NanoTweenAdvance(mySprite, 1.0, {alpha:0}, {onComplete:myFunction,onCompleteArgs:[true,10]}).start();
 	 * private function myFunction(param1:Boolean, param2:int):void</listing>
 	 * 
 	 * @example The following code creates a new tween on mySprite that will fade the alpha to 0 over 1 second,
 	 * and on every update will call the function 'myFunction' and pass 'true' and '10' as the arguments:
 	 * <listing version="3.0">
-	 * new NanoTween(mySprite, 1.0, {alpha:0}, null, {onUpdate:myFunction,onUpdateArgs:[true,10]}).start();
+	 * new NanoTweenAdvance(mySprite, 1.0, {alpha:0}, {onUpdate:myFunction,onUpdateArgs:[true,10]}).start();
 	 * private function myFunction(param1:Boolean, param2:int):void</listing>
+	 * 
+	 * @example The following code creates a new tween on mySprite that will move x to 100 and y to 200
+	 * and will use the easing equation easeOutQuad:
+	 * <listing version="3.0">
+	 * new NanoTweenAdvance(mySprite, 1.0, {x:100, y:200}, {ease:Quad.easeOut]}).start();</listing>
 	 * 
 	 * @author edecker
 	 */
