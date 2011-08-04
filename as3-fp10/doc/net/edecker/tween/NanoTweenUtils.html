@@ -72,7 +72,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#removeTweens()">removeTweens</a>(target:Object, attributes:Array):void</div>
+<a class="signatureLink" href="#removeTweens()">removeTweens</a>(target:Object, attributes:Array, exclude:<a href="NanoTween.html">NanoTween</a> = null):void</div>
 <div class="summaryTableDescription">[static] Removes selected tweens associated attributes on a target object
     </div>
 </td><td class="summaryTableOwnerCol">NanoTweenUtils</td>
@@ -133,7 +133,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function removeTweens(target:Object, attributes:Array):void</code><p> Removes selected tweens associated attributes on a target object
+<code>public static function removeTweens(target:Object, attributes:Array, exclude:<a href="NanoTween.html">NanoTween</a> = null):void</code><p> Removes selected tweens associated attributes on a target object
     </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -145,6 +145,13 @@ showHideInherited();
 </tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">attributes</span>:Array</code> &mdash; Array of attribute names as strings
+    </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">exclude</span>:<a href="NanoTween.html">NanoTween</a></code> (default = <code>null</code>)<code></code> &mdash; Optional, a NanoTween to exclude when removing tween parameters
    </td>
 </tr>
 </table>

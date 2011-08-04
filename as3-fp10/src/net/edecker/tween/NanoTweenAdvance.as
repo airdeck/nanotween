@@ -41,7 +41,7 @@ package net.edecker.tween {
 		 * 		  </ul>
 		 */
 		public function NanoTweenAdvance(target:Object, time:Number, props:Object, tweenParams:Object = null) {
-			super(target, time, props, tweenParams.ease, tweenParams.hasOwnProperty('autoKill') ? tweenParams.autoKill : true);
+			super(target, time, props, (tweenParams ? tweenParams.ease : null), (tweenParams && tweenParams.hasOwnProperty('autoKill') ? tweenParams.autoKill : true));
 			if (tweenParams) {
 				a = e(tweenParams,"onComplete");
 				b = e(tweenParams,"onCompleteArgs");
@@ -62,6 +62,13 @@ package net.edecker.tween {
 
 		private function g(e:Event):void {
 			if (Boolean(c)) c.apply(undefined, d);
+		}
+		
+		override protected function s():void {
+			var att:Array = [];
+			for each (var p:Object in m) att.push(p.n);
+			NanoTweenUtils.removeTweens(target, att, this);
+			super.s();
 		}
 		
 		/** Performs necessary actions to make sure the tween is garbage collected.

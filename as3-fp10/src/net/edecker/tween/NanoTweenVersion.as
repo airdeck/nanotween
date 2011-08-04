@@ -6,7 +6,7 @@ package net.edecker.tween {
 	public class NanoTweenVersion {
 	
 		public static const AUTHOR:String = 'Eric Decker';
-		public static const VERSION:String = '1.5.0';
-		public static const DATE:String = '08/03/2011 08:26 PM';
+		public static const VERSION:String = '1.5.1';
+		public static const DATE:String = '08/04/2011 08:52 AM';
 	}
 }

@@ -131,7 +131,7 @@ package net.edecker.tween {
 			p = -1;
 		}
 
-		private function s():void {
+		protected function s():void {
 			for each (var obj:Object in m) obj.s = target[obj.n];
 			j = getTimer();
 			i = Math.ceil(j+(k));
